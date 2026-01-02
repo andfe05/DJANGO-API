@@ -1,1 +1,2 @@
-# DJANGO-API
+DJANGO API Desenvolvida no Canal DescolaDev 
+
