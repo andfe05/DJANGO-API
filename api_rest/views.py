@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
@@ -36,6 +37,15 @@ def get_user_by_nick(request, nick):
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
+    
+    if request.method != 'PUT':
+        serializer = UserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_ACEPTED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -72,8 +82,24 @@ def create_user(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# editando dados
+@api_view(['PUT'])
+def update_user(request):
+    if request.method == 'PUT':
 
+     nickname = request.data['user_nickname']
 
+    updated_user = User.objects.get(pk=nickname)
+
+    print(request.data)
+
+    serializer = UserSerializer(updated_user, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
