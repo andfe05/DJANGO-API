@@ -10,6 +10,26 @@ from .serializers import UserSerializer
 import json
 # Create your views here.
 
+@api_view(['GET'])
+def get_users(request):
+
+    if request.method == 'GET':
+        
+        users = User.objects.all()  
+
+        serializer = UserSerializer(users, many=True)
+
+        return Response(serializer.data)
+    
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
+
 def databaseEmDjango():
 
     data = User.objects.get(pk='andre_nick')  #OBJETO
