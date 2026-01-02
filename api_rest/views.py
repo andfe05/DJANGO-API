@@ -61,6 +61,34 @@ def use_manager(request):
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+#criando dados
+
+def create_user(request):
+    serializer = UserSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def databaseEmDjango():
 
     data = User.objects.get(pk='andre_nick')  #OBJETO
