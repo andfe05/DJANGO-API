@@ -115,6 +115,7 @@ def update_user(request):
 
 
 
+
 def databaseEmDjango():
 
     data = User.objects.get(pk='andre_nick')  #OBJETO
