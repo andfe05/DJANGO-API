@@ -39,8 +39,27 @@ def get_user_by_nick(request, nick):
 
 
 
+#CRUDZAO DA MASSA
 
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def use_manager(request):
+    if request.method == 'GET':
+        try:
+            if request.GET['user']:
 
+                user_nickname = request.GET['user']
+            try:
+                user= User.objects.get(pk=user_nickname)
+            except:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            
+                serializer = UserSerializer(user)
+                return Response(serializer.data)
+            
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 def databaseEmDjango():
 
